@@ -10,11 +10,12 @@ SIGNUP_URL = "https://ttp.cbp.dhs.gov/"
 
 TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
 TWILIO_AUTH = os.environ['TWILIO_AUTH']
+PHONE_NUMBER = os.environ['PHONE_NUMBER']
 
 def send_sms(client: Client):
     if client == None:
         print("Error: twilio client is uninitialized")
-    message = client.messages.create(body="Book global reentry: %s" % SIGNUP_URL, from_="+12568261687", to="+19784351861")
+    message = client.messages.create(body="Book global reentry: %s" % SIGNUP_URL, from_="+12568261687", to=PHONE_NUMBER)
 
 def check_appointments(client: Client) -> None:
     if client == None:
@@ -27,7 +28,7 @@ def main() -> int:
     client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH)
     while (True):
         check_appointments(client)
-        time.sleep(20)
+        time.sleep(2000)
     return 0
 
 if __name__=="__main__":
